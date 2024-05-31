@@ -1,0 +1,8 @@
+{
+  "name": "temple-accounts",
+  "integrations": {
+    "capacitor": {}
+  },
+  "type": "angular",
+  "id": "5465a839"
+}
