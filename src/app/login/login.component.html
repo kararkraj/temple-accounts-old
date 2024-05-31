@@ -3,15 +3,17 @@
     <h1>Login</h1>
   </ion-text>
 
-  <ion-list lines="none">
-    <ion-item>
-      <ion-input label="Email" label-placement="floating" fill="solid" placeholder="Enter email"
-        type="email"></ion-input>
-    </ion-item>
-    <ion-item>
-      <ion-input label="Password" label-placement="floating" fill="solid" placeholder="Enter password"
-        type="password"></ion-input>
-    </ion-item>
-  </ion-list>
+  <form (ngSubmit)="onLogin()">
+    <div>
+      <ion-input [(ngModel)]="username" label="Username" label-placement="floating" fill="solid"
+        placeholder="Enter username" type="text" name="username" required></ion-input>
+    </div>
+    <div>
+      <ion-input [(ngModel)]="password" label="Password" label-placement="floating" fill="solid"
+        placeholder="Enter password" type="password" name="password" required></ion-input>
+    </div>
+
+    <ion-button expand="full" type="submit">Login</ion-button>
+  </form>
 
 </div>

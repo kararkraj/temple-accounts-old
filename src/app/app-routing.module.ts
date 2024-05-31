@@ -4,12 +4,17 @@ import { LoginComponent } from './login/login.component';
 
 const routes: Routes = [
   {
-    path: '',
+    path: 'login',
     component: LoginComponent
   },
   {
     path: 'auth',
     loadChildren: () => import('./tabs/tabs.module').then(m => m.TabsPageModule)
+  },
+  {
+    path: "**",
+    pathMatch: "full",
+    redirectTo: "/login"
   }
 ];
 @NgModule({
