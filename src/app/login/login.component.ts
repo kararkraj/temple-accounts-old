@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { ToastController } from '@ionic/angular';
+import { AuthService } from '../auth/auth.service';
 
 @Component({
   selector: 'app-login',
@@ -14,7 +15,8 @@ export class LoginComponent implements OnInit {
 
   constructor(
     private toastController: ToastController,
-    private router: Router
+    private router: Router,
+    private auth: AuthService
   ) {
     this.username = "";
     this.password = "";
@@ -22,26 +24,24 @@ export class LoginComponent implements OnInit {
 
   ngOnInit() { }
 
-  async onLogin() {
-    if (this.username === "admin" && this.password === "admin") {
-      const toast = await this.toastController.create({
-        message: 'Login successful!!',
-        duration: 5000,
-        position: 'bottom'
-      });
-      await toast.present().then(() => {
-        this.router.navigateByUrl("/auth/tabs/tab1").then(() => {
-          console.log("navigated");
-        })
-      });
-    } else {
-      const toast = await this.toastController.create({
-        message: 'Invalid credentials',
-        duration: 5000,
-        position: 'bottom'
-      });
-      await toast.present();
-    }
+  onLogin() {
+    this.auth.login(this.username, this.password).subscribe({
+      next: (iaAuthenticated: boolean) => {
+        if (iaAuthenticated) {
+          this.toastController.create({
+            message: 'Login successful!!',
+            duration: 5000,
+            position: 'bottom'
+          }).then(toast => toast.present().then(() => this.router.navigateByUrl("/auth/tabs/tab1")));
+        } else {
+          this.toastController.create({
+            message: 'Invalid credentials',
+            duration: 5000,
+            position: 'bottom'
+          }).then(toast => toast.present());
+        }
+      }
+    });
   }
 
 }
