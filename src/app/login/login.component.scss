@@ -1,5 +1,5 @@
 .login-container {
-    min-width: 400px;
+    width: 100%;
     max-width: 600px;
     position: absolute;
     left: 50%;
@@ -9,7 +9,7 @@
 }
 
 form {
-    padding: 10px;
+    padding: 20px;
 
     div {
         margin: 20px 0;

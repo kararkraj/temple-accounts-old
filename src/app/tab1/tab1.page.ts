@@ -2,10 +2,12 @@ import { Component } from '@angular/core';
 import { AuthService } from '../auth/auth.service';
 import { Directory, Filesystem, WriteFileResult } from '@capacitor/filesystem';
 import { FileOpener, FileOpenerOptions } from '@capacitor-community/file-opener';
-import { AlertController, Platform } from '@ionic/angular';
+import { Platform } from '@ionic/angular';
 
 import * as pdfMake from 'pdfmake/build/pdfmake';
 import * as pdfFonts from 'pdfmake/build/vfs_fonts';
+import { DataService } from '../services/data.service';
+import { Entry } from '../interfaces/entry.interface';
 (pdfMake as any).vfs = pdfFonts.pdfMake.vfs;
 
 @Component({
@@ -42,6 +44,7 @@ export class Tab1Page {
   constructor(
     private authService: AuthService,
     public platform: Platform,
+    private dataService: DataService
   ) {
     this.name = "";
     this.seva = undefined;
@@ -51,7 +54,41 @@ export class Tab1Page {
     if (!this.name || !this.seva) {
       return;
     }
-    const docDefinition = {
+    const entry: Entry = {
+      name: this.name,
+      payment: this.sevas.find(seva => seva.id === this.seva)?.payment as number,
+      sevaName: this.sevas.find(seva => seva.id === this.seva)?.name as string
+    }
+    this.dataService.addEntry(entry).subscribe(res => {
+      this.downloadPDFReceipt();
+      this.seva = undefined;
+      this.name = "";
+    });
+  }
+
+  downloadPDFReceipt() {
+    if (this.platform.is('desktop')) {
+      pdfMake.createPdf(this.getDocDefinition()).download(`${this.name}`);
+    } else {
+      pdfMake.createPdf(this.getDocDefinition()).getDataUrl((res: string) => {
+        Filesystem.writeFile({
+          path: `${this.name}.pdf`,
+          data: res,
+          directory: Directory.Documents
+        }).then((res: WriteFileResult) => {
+          const fileOpenerOptions: FileOpenerOptions = {
+            filePath: res.uri,
+            contentType: 'application/pdf',
+            openWithDefault: true,
+          };
+          FileOpener.open(fileOpenerOptions).then().catch(e => console.log('Error opening file', e));
+        });
+      });
+    }
+  }
+
+  getDocDefinition() {
+    return {
       content: [
         {
           text: `Payment receipt - ${this.name}`,
@@ -71,25 +108,6 @@ export class Tab1Page {
           fontSize: 15
         }
       }
-    }
-
-    if (this.platform.is('desktop')) {
-      pdfMake.createPdf(docDefinition).download(`${this.name}`);
-    } else {
-      pdfMake.createPdf(docDefinition).getDataUrl((res: string) => {
-        Filesystem.writeFile({
-          path: `${this.name}.pdf`,
-          data: res,
-          directory: Directory.Documents
-        }).then((res: WriteFileResult) => {
-          const fileOpenerOptions: FileOpenerOptions = {
-            filePath: res.uri,
-            contentType: 'application/pdf',
-            openWithDefault: true,
-          };
-          FileOpener.open(fileOpenerOptions).then().catch(e => console.log('Error opening file', e));
-        });
-      });
     }
   }
 
