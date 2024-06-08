@@ -1,4 +1,5 @@
 import { Injectable } from '@angular/core';
+import { Router } from '@angular/router';
 import { Observable, of } from 'rxjs';
 
 @Injectable({
@@ -6,24 +7,29 @@ import { Observable, of } from 'rxjs';
 })
 export class AuthService {
 
-  private isAuthenticated: boolean = false;
-
-  constructor() { }
+  constructor(
+    private router: Router
+  ) { }
 
   login(username: string, password: string): Observable<boolean> {
     if (username === "admin" && password === "admin") {
-      this.isAuthenticated = true;
+      this.updateAuthenticated(true);
     } else {
-      this.isAuthenticated = false;
+      this.updateAuthenticated(false);
     }
-    return of(this.authenticated());
+    return of(this.isAuthenticated());
   }
 
   logout() {
-    this.isAuthenticated = false;
+    this.updateAuthenticated(false);
+    this.router.navigateByUrl('login');
   }
 
-  authenticated() {
-    return this.isAuthenticated;
+  isAuthenticated(): boolean {
+    return localStorage.getItem('isAuthenticated') === 'true';
+  }
+
+  updateAuthenticated(isAuthenticated: boolean): void {
+    localStorage.setItem('isAuthenticated', `${isAuthenticated}`);
   }
 }

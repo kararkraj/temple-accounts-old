@@ -1,21 +1,17 @@
 <ion-header [translucent]="true">
   <ion-toolbar>
     <ion-title>
-      Tab 1
+      Add Entry
     </ion-title>
+    <ion-buttons slot="end">
+      <ion-button title="logout" (click)="logout()">
+        <ion-icon name="log-out-outline"></ion-icon>
+      </ion-button>
+    </ion-buttons>
   </ion-toolbar>
 </ion-header>
 
 <ion-content [fullscreen]="true">
-  <ion-header collapse="condense">
-    <ion-toolbar>
-      <ion-title size="large">Add Entry</ion-title>
-    </ion-toolbar>
-  </ion-header>
-
-  <ion-text color="primary" class="text-center">
-    <h1>Add Entry</h1>
-  </ion-text>
   <div class="container">
     <form (ngSubmit)="onSubmit()">
       <ion-input [(ngModel)]="name" label="Name" label-placement="floating" fill="solid" placeholder="Enter name"
@@ -30,4 +26,8 @@
       <ion-button expand="full" type="submit">Submit</ion-button>
     </form>
   </div>
+
+  <hr>
+
+  <iframe *ngIf="pdfSrc" [src]="pdfSrc" frameborder="0"></iframe>
 </ion-content>
