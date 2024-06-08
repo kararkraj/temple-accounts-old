@@ -13,7 +13,7 @@
 
 <ion-content [fullscreen]="true">
   <div class="container">
-    <form (ngSubmit)="onSubmit()">
+    <form (ngSubmit)="onSubmit(entryForm)" #entryForm="ngForm">
       <ion-input [(ngModel)]="name" label="Name" label-placement="floating" fill="solid" placeholder="Enter name"
         type="text" name="name" required></ion-input>
       <ion-select [(ngModel)]="seva" label="Seva" label-placement="floating" fill="solid" placeholder="Select sevas"

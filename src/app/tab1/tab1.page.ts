@@ -8,6 +8,7 @@ import * as pdfMake from 'pdfmake/build/pdfmake';
 import * as pdfFonts from 'pdfmake/build/vfs_fonts';
 import { DataService } from '../services/data.service';
 import { Entry } from '../interfaces/entry.interface';
+import { NgForm } from '@angular/forms';
 (pdfMake as any).vfs = pdfFonts.pdfMake.vfs;
 
 @Component({
@@ -50,7 +51,7 @@ export class Tab1Page {
     this.seva = undefined;
   }
 
-  onSubmit() {
+  onSubmit(form: NgForm) {
     if (!this.name || !this.seva) {
       return;
     }
@@ -60,31 +61,37 @@ export class Tab1Page {
       sevaName: this.sevas.find(seva => seva.id === this.seva)?.name as string
     }
     this.dataService.addEntry(entry).subscribe(res => {
-      this.downloadPDFReceipt();
-      this.seva = undefined;
-      this.name = "";
+      this.downloadPDFReceipt().then(res => form.reset());
     });
   }
 
   downloadPDFReceipt() {
-    if (this.platform.is('desktop')) {
-      pdfMake.createPdf(this.getDocDefinition()).download(`${this.name}`);
-    } else {
-      pdfMake.createPdf(this.getDocDefinition()).getDataUrl((res: string) => {
-        Filesystem.writeFile({
-          path: `${this.name}.pdf`,
-          data: res,
-          directory: Directory.Documents
-        }).then((res: WriteFileResult) => {
-          const fileOpenerOptions: FileOpenerOptions = {
-            filePath: res.uri,
-            contentType: 'application/pdf',
-            openWithDefault: true,
-          };
-          FileOpener.open(fileOpenerOptions).then().catch(e => console.log('Error opening file', e));
+    return new Promise((resolve, reject) => {
+      if (this.platform.is('desktop')) {
+        pdfMake.createPdf(this.getDocDefinition()).download(`${this.name}`);
+        resolve(true);
+      } else {
+        pdfMake.createPdf(this.getDocDefinition()).getDataUrl((res: string) => {
+          Filesystem.writeFile({
+            path: `${this.name}.pdf`,
+            data: res,
+            directory: Directory.Documents
+          }).then((res: WriteFileResult) => {
+            const fileOpenerOptions: FileOpenerOptions = {
+              filePath: res.uri,
+              contentType: 'application/pdf',
+              openWithDefault: true,
+            };
+            FileOpener.open(fileOpenerOptions)
+              .then(res => resolve(true))
+              .catch(e => {
+                console.log('Error opening file', e);
+                reject(e);
+              });
+          });
         });
-      });
-    }
+      }
+    });
   }
 
   getDocDefinition() {
