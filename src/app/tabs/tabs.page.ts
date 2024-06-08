@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, OnInit, effect } from '@angular/core';
 import { AuthService } from '../auth/auth.service';
 
 @Component({
@@ -6,10 +6,32 @@ import { AuthService } from '../auth/auth.service';
   templateUrl: 'tabs.page.html',
   styleUrls: ['tabs.page.scss']
 })
-export class TabsPage {
+export class TabsPage implements OnInit {
+
+  public confirmLogoutAlertButtons = [
+    {
+      text: 'Cancel',
+      role: 'cancel',
+      handler: () => this.authService.closeConfirmLogoutAlert(),
+    },
+    {
+      text: 'Logout',
+      role: 'confirm',
+      handler: () => this.authService.logout(),
+    },
+  ];
+  isConfirmLogoutAlertOpen: boolean = false;
 
   constructor(
     private authService: AuthService
-  ) {}
+  ) {
+    effect(() => {
+      this.isConfirmLogoutAlertOpen = this.authService.isConfirmLogoutAlertOpen();
+    });
+
+  }
+
+  ngOnInit(): void {
+  }
 
 }

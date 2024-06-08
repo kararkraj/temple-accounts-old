@@ -2,8 +2,7 @@ import { Component } from '@angular/core';
 import { AuthService } from '../auth/auth.service';
 import { Directory, Filesystem, WriteFileResult } from '@capacitor/filesystem';
 import { FileOpener, FileOpenerOptions } from '@capacitor-community/file-opener';
-import { DomSanitizer, SafeResourceUrl } from '@angular/platform-browser';
-import { Platform } from '@ionic/angular';
+import { AlertController, Platform } from '@ionic/angular';
 
 import * as pdfMake from 'pdfmake/build/pdfmake';
 import * as pdfFonts from 'pdfmake/build/vfs_fonts';
@@ -39,18 +38,19 @@ export class Tab1Page {
         payment: 1001
       }
     ];
-  pdfSrc!: SafeResourceUrl;
 
   constructor(
     private authService: AuthService,
-    private sanitizer: DomSanitizer,
-    public platform: Platform
+    public platform: Platform,
   ) {
     this.name = "";
     this.seva = undefined;
   }
 
   onSubmit() {
+    if (!this.name || !this.seva) {
+      return;
+    }
     const docDefinition = {
       content: [
         {
@@ -71,37 +71,30 @@ export class Tab1Page {
           fontSize: 15
         }
       }
-
     }
 
-    pdfMake.createPdf(docDefinition).getDataUrl((res: string) => {
-      this.pdfSrc = this.sanitizer.bypassSecurityTrustResourceUrl(res);
-    });
-
-    // if (this.platform.is('desktop')) {
-    //   pdfMake.createPdf(docDefinition).download(`${this.name}`);
-    // } else {
-    //   pdfMake.createPdf(docDefinition).getDataUrl((res: string) => {
-    //     Filesystem.writeFile({
-    //       path: `${this.name}.pdf`,
-    //       data: res,
-    //       directory: Directory.Documents
-    //     }).then((res: WriteFileResult) => {
-    //       const fileOpenerOptions: FileOpenerOptions = {
-    //         filePath: res.uri,
-    //         contentType: 'application/pdf',
-    //         openWithDefault: true,
-    //       };
-    //       FileOpener.open(fileOpenerOptions).then().catch(e => console.log('Error opening file', e));
-    //     });
-
-    //     this.pdfSrc = this.sanitizer.bypassSecurityTrustResourceUrl(res);
-    //   });
-    // }
+    if (this.platform.is('desktop')) {
+      pdfMake.createPdf(docDefinition).download(`${this.name}`);
+    } else {
+      pdfMake.createPdf(docDefinition).getDataUrl((res: string) => {
+        Filesystem.writeFile({
+          path: `${this.name}.pdf`,
+          data: res,
+          directory: Directory.Documents
+        }).then((res: WriteFileResult) => {
+          const fileOpenerOptions: FileOpenerOptions = {
+            filePath: res.uri,
+            contentType: 'application/pdf',
+            openWithDefault: true,
+          };
+          FileOpener.open(fileOpenerOptions).then().catch(e => console.log('Error opening file', e));
+        });
+      });
+    }
   }
 
   logout() {
-    this.authService.logout();
+    this.authService.openConfirmLogoutAlert();
   }
 
 }
