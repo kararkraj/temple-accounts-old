@@ -9,12 +9,24 @@ ion-row:first-child ion-col {
 }
 
 ion-col {
-    border: solid 1px #000000;
+    border-right: solid 1px #808080;
+    border-bottom: solid 1px #808080;
     color: #000000;
     text-align: left;
+}
+
+ion-col:first-child {
+    border-left: solid 1px #808080;
 }
 
 ion-grid {
     margin: 20px auto;
     padding: 20px;
+}
+
+.no-entries-row {
+    ion-col {
+        border: none;
+    }
+    border: 1px solid #808080;
 }
