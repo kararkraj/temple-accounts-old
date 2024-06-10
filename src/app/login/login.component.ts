@@ -32,7 +32,7 @@ export class LoginComponent implements OnInit {
             message: 'Login successful!!',
             duration: 5000,
             position: 'bottom'
-          }).then(toast => toast.present().then(() => this.router.navigateByUrl("/auth/tabs/tab1")));
+          }).then(toast => toast.present().then(() => this.router.navigateByUrl("/auth/add-entry")));
         } else {
           this.toastController.create({
             message: 'Invalid credentials',
