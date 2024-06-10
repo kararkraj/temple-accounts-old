@@ -1,5 +1,4 @@
 import { Component } from '@angular/core';
-import { AuthService } from '../auth/auth.service';
 import { Directory, Filesystem, WriteFileResult } from '@capacitor/filesystem';
 import { FileOpener, FileOpenerOptions } from '@capacitor-community/file-opener';
 import { Platform } from '@ionic/angular';
@@ -66,7 +65,7 @@ export class Tab1Page {
 
   downloadPDFReceipt() {
     return new Promise((resolve, reject) => {
-      if (this.platform.is('desktop')) {
+      if (this.platform.is('desktop') || this.platform.is('mobileweb')) {
         pdfMake.createPdf(this.getDocDefinition()).download(`${this.name}`);
         resolve(true);
       } else {
