@@ -1,17 +1,14 @@
-<ion-tabs>
+<app-header [title]="this.title"></app-header>
 
+<ion-tabs #tabs (ionTabsDidChange)="onTabChange($event.tab)">
   <ion-tab-bar slot="bottom">
-    <ion-tab-button tab="tab1" href="/tabs/tab1">
-      <ion-icon aria-hidden="true" name="add-outline"></ion-icon>
-      <ion-label>Add Entry</ion-label>
+    @for (tabDetail of tabDetails; track $index) {
+    <ion-tab-button [tab]="tabDetail.tabName" [href]="tabDetail.href">
+      <ion-icon aria-hidden="true" [name]="tabDetail.iconName"></ion-icon>
+      <ion-label>{{tabDetail.title}}</ion-label>
     </ion-tab-button>
-
-    <ion-tab-button tab="tab2" href="/tabs/tab2">
-      <ion-icon aria-hidden="true" name="list-outline"></ion-icon>
-      <ion-label>View Entries</ion-label>
-    </ion-tab-button>
+    }
   </ion-tab-bar>
-
 </ion-tabs>
 
 <ion-alert [isOpen]="isConfirmLogoutAlertOpen" header="Please confirm logout."

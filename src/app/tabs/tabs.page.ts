@@ -1,5 +1,7 @@
-import { Component, OnInit, effect } from '@angular/core';
+import { Component, OnInit, ViewChild, effect } from '@angular/core';
 import { AuthService } from '../auth/auth.service';
+import { TAB_DETAILS, TabDetail } from './tabDetails';
+import { IonTabs } from '@ionic/angular';
 
 @Component({
   selector: 'app-tabs',
@@ -21,6 +23,9 @@ export class TabsPage implements OnInit {
     },
   ];
   isConfirmLogoutAlertOpen: boolean = false;
+  title: string = "";
+  tabDetails: TabDetail[] = TAB_DETAILS;
+  @ViewChild('tabs') tabs!: IonTabs;
 
   constructor(
     private authService: AuthService
@@ -28,10 +33,13 @@ export class TabsPage implements OnInit {
     effect(() => {
       this.isConfirmLogoutAlertOpen = this.authService.isConfirmLogoutAlertOpen();
     });
-
   }
 
   ngOnInit(): void {
+  }
+
+  onTabChange(tabName: string) {
+    this.title = this.tabDetails.find(tabDetail => tabDetail.tabName === tabName)?.title as string;
   }
 
 }

@@ -16,7 +16,7 @@ const routes: Routes = [
   {
     path: "**",
     pathMatch: "full",
-    redirectTo: "/auth/tabs/tab1"
+    redirectTo: "/auth/tabs/add-entry"
   }
 ];
 @NgModule({
