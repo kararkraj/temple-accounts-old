@@ -21,8 +21,4 @@ export class Tab2Page implements OnInit {
     this.entries = this.dataService.getEntries();
   }
 
-  logout() {
-    this.authService.openConfirmLogoutAlert();
-  }
-
 }

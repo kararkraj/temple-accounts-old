@@ -43,7 +43,6 @@ export class Tab1Page {
     ];
 
   constructor(
-    private authService: AuthService,
     public platform: Platform,
     private dataService: DataService
   ) {
@@ -116,10 +115,6 @@ export class Tab1Page {
         }
       }
     }
-  }
-
-  logout() {
-    this.authService.openConfirmLogoutAlert();
   }
 
 }
