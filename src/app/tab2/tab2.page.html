@@ -1,7 +1,6 @@
 <ion-content [fullscreen]="true">
   <ion-grid [fixed]="true">
     <ion-row>
-      <ion-col>Sr No.</ion-col>
       <ion-col>Name</ion-col>
       <ion-col>Chariety</ion-col>
       <ion-col>Seva Name</ion-col>
@@ -9,7 +8,6 @@
     @if (entries.length > 0) {
     @for (entry of entries; track $index) {
     <ion-row>
-      <ion-col>{{$index + 1}}</ion-col>
       <ion-col>{{entry.name}}</ion-col>
       <ion-col>{{entry.payment}}</ion-col>
       <ion-col>{{entry.sevaName}}</ion-col>

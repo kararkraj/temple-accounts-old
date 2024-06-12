@@ -8,6 +8,8 @@ import * as pdfFonts from 'pdfmake/build/vfs_fonts';
 import { DataService } from '../services/data.service';
 import { Entry } from '../interfaces/entry.interface';
 import { NgForm } from '@angular/forms';
+import { Storage } from '@ionic/storage-angular';
+import { CharietyType, charietyTypes } from './charietyType.interface';
 (pdfMake as any).vfs = pdfFonts.pdfMake.vfs;
 
 @Component({
@@ -19,44 +21,28 @@ export class Tab1Page {
 
   name: string;
   seva: number | undefined;
-  sevas: {
-    id: number;
-    name: string;
-    payment: number;
-  }[] = [
-      {
-        id: 1,
-        name: "Seva 1 - 101",
-        payment: 101
-      },
-      {
-        id: 2,
-        name: "Seva 2 - 501",
-        payment: 501
-      },
-      {
-        id: 3,
-        name: "Seva 3 - 1001",
-        payment: 1001
-      }
-    ];
+  sevas: CharietyType[] = charietyTypes;
 
   constructor(
     public platform: Platform,
-    private dataService: DataService
+    private dataService: DataService,
+    private storage: Storage
   ) {
     this.name = "";
     this.seva = undefined;
   }
 
-  onSubmit(form: NgForm) {
+  async onSubmit(form: NgForm) {
     if (!this.name || !this.seva) {
       return;
     }
+    const id = await this.storage.get('lastStoredId') + 1;
+    const { payment, name } = this.sevas.find(seva => seva.id === this.seva) as CharietyType;
     const entry: Entry = {
+      id,
       name: this.name,
-      payment: this.sevas.find(seva => seva.id === this.seva)?.payment as number,
-      sevaName: this.sevas.find(seva => seva.id === this.seva)?.name as string
+      payment,
+      sevaName: name
     }
     this.dataService.addEntry(entry).subscribe(res => {
       this.downloadPDFReceipt().then(res => form.reset());

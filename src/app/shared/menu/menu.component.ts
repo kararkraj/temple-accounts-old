@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { MenuController } from '@ionic/angular';
 import { AuthService } from 'src/app/auth/auth.service';
+import { DataService } from 'src/app/services/data.service';
 
 @Component({
   selector: 'app-menu',
@@ -11,8 +12,21 @@ export class MenuComponent  implements OnInit {
 
   constructor(
     private authService: AuthService,
-    private menuCtrl: MenuController
+    private menuCtrl: MenuController,
+    private dataService: DataService
   ) { }
+
+  public confirmClearStorageButtons = [
+    {
+      text: 'Cancel',
+      role: 'cancel'
+    },
+    {
+      text: 'YES, Clear Storage',
+      role: 'confirm',
+      handler: () => this.clearStorage(),
+    },
+  ];
 
   ngOnInit() {}
 
@@ -23,6 +37,11 @@ export class MenuComponent  implements OnInit {
 
   changeLanguage() {
     
+  }
+
+  clearStorage() {
+    this.dataService.resetStorage();
+    this.menuCtrl.close();
   }
 
 }

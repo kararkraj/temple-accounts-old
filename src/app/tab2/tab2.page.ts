@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, EffectRef, OnInit, effect } from '@angular/core';
 import { Entry } from '../interfaces/entry.interface';
 import { DataService } from '../services/data.service';
 
@@ -10,13 +10,19 @@ import { DataService } from '../services/data.service';
 export class Tab2Page implements OnInit {
 
   entries: Entry[] = [];
+  updatedEntriesEffect: EffectRef = effect(() => {
+    this.dataService.entriesUpdatedSignal();
+    this.getEntries();
+  });
 
   constructor(
     private dataService: DataService
   ) { }
 
-  ngOnInit(): void {
-    this.entries = this.dataService.getEntries();
+  ngOnInit(): void { }
+
+  getEntries() {
+    this.dataService.getEntries().then((entries: Entry[]) => this.entries = entries);
   }
 
 }
