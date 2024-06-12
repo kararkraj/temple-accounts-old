@@ -1,5 +1,4 @@
-import { Component, OnInit, ViewChild, effect } from '@angular/core';
-import { AuthService } from '../auth/auth.service';
+import { Component, OnInit, ViewChild } from '@angular/core';
 import { TAB_DETAILS, TabDetail } from './tabDetails';
 import { IonTabs } from '@ionic/angular';
 
@@ -10,30 +9,12 @@ import { IonTabs } from '@ionic/angular';
 })
 export class TabsPage implements OnInit {
 
-  public confirmLogoutAlertButtons = [
-    {
-      text: 'Cancel',
-      role: 'cancel',
-      handler: () => this.authService.closeConfirmLogoutAlert(),
-    },
-    {
-      text: 'Logout',
-      role: 'confirm',
-      handler: () => this.authService.logout(),
-    },
-  ];
   isConfirmLogoutAlertOpen: boolean = false;
   title: string = "";
   tabDetails: TabDetail[] = TAB_DETAILS;
   @ViewChild('tabs') tabs!: IonTabs;
 
-  constructor(
-    private authService: AuthService
-  ) {
-    effect(() => {
-      this.isConfirmLogoutAlertOpen = this.authService.isConfirmLogoutAlertOpen();
-    });
-  }
+  constructor() { }
 
   ngOnInit(): void {
   }

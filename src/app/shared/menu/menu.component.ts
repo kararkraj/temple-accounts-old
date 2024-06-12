@@ -8,17 +8,11 @@ import { DataService } from 'src/app/services/data.service';
   templateUrl: './menu.component.html',
   styleUrls: ['./menu.component.scss'],
 })
-export class MenuComponent  implements OnInit {
+export class MenuComponent implements OnInit {
 
-  constructor(
-    private authService: AuthService,
-    private menuCtrl: MenuController,
-    private dataService: DataService
-  ) { }
-
-  public confirmClearStorageButtons = [
+  public clearStorageAlertButtons = [
     {
-      text: 'Cancel',
+      text: 'No, Cancel',
       role: 'cancel'
     },
     {
@@ -27,20 +21,38 @@ export class MenuComponent  implements OnInit {
       handler: () => this.clearStorage(),
     },
   ];
+  public logoutAlertButtons = [
+    {
+      text: 'No, Cancel',
+      role: 'cancel',
+    },
+    {
+      text: 'Yes, Logout',
+      role: 'confirm',
+      handler: () => this.logout(),
+    },
+  ];
 
-  ngOnInit() {}
+  constructor(
+    private authService: AuthService,
+    private menuCtrl: MenuController,
+    private dataService: DataService
+  ) { }
 
-  logout() {
-    this.authService.openConfirmLogoutAlert();
-    this.menuCtrl.close();
-  }
+
+  ngOnInit() { }
 
   changeLanguage() {
-    
+
   }
 
   clearStorage() {
     this.dataService.resetStorage();
+    this.menuCtrl.close();
+  }
+
+  logout() {
+    this.authService.logout();
     this.menuCtrl.close();
   }
 

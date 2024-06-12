@@ -1,4 +1,4 @@
-import { Injectable, signal } from '@angular/core';
+import { Injectable } from '@angular/core';
 import { Router } from '@angular/router';
 import { Observable, of } from 'rxjs';
 
@@ -6,8 +6,6 @@ import { Observable, of } from 'rxjs';
   providedIn: 'root'
 })
 export class AuthService {
-
-  public isConfirmLogoutAlertOpen = signal(false);
 
   constructor(
     private router: Router
@@ -23,7 +21,6 @@ export class AuthService {
   }
 
   logout() {
-    this.closeConfirmLogoutAlert();
     this.updateAuthenticated(false);
     this.router.navigateByUrl('login');
   }
@@ -34,13 +31,5 @@ export class AuthService {
 
   updateAuthenticated(isAuthenticated: boolean): void {
     localStorage.setItem('isAuthenticated', `${isAuthenticated}`);
-  }
-
-  openConfirmLogoutAlert() {
-    this.isConfirmLogoutAlertOpen.set(true);
-  }
-
-  closeConfirmLogoutAlert() {
-    this.isConfirmLogoutAlertOpen.set(false);
   }
 }
