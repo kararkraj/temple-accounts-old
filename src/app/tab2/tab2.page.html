@@ -5,15 +5,13 @@
       <ion-col>Amount</ion-col>
       <ion-col>Seva Name</ion-col>
     </ion-row>
-    @if (entries.length > 0) {
     @for (entry of entries; track $index) {
     <ion-row>
       <ion-col>{{entry.name}}</ion-col>
       <ion-col>{{entry.payment}}</ion-col>
       <ion-col>{{entry.sevaName}}</ion-col>
     </ion-row>
-    }
-    } @else {
+    } @empty {
     <ion-row class="no-entries-row">
       <ion-col size="12" class="ion-text-center">No entries to show.</ion-col>
     </ion-row>
