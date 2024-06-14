@@ -5,11 +5,30 @@
     </ion-toolbar>
   </ion-header>
   <ion-content>
-    <ion-list lines="full">
-      <ion-item (click)="changeLanguage()" [button]="true">
-        <ion-icon aria-hidden="true" name="language-outline" slot="start"></ion-icon>
-        <ion-label>Change language</ion-label>
-      </ion-item>
+    <ion-accordion-group>
+      <ion-accordion value="first">
+        <ion-item slot="header">
+          <ion-icon aria-hidden="true" name="language-outline" slot="start"></ion-icon>
+          <ion-label>Change language</ion-label>
+        </ion-item>
+        <div class="ion-padding-start" slot="content">
+          <ion-list lines="none" class="ion-no-padding">
+            @for (language of languages; track $index) {
+            <ion-item [button]="true" (click)="changeLanguage($index)">
+              @if (language.isSelected) {
+              <ion-icon aria-hidden="true" [name]="language.iconName" slot="start"></ion-icon>
+              } @else {
+              <!-- For an unselected language, ion-icon element with empty name attribute is required for spacing and alignment purpose -->
+              <ion-icon aria-hidden="true" name="" slot="start"></ion-icon>
+              }
+              <ion-label>{{language.language}}</ion-label>
+            </ion-item>
+            }
+          </ion-list>
+        </div>
+      </ion-accordion>
+    </ion-accordion-group>
+    <ion-list lines="full" class="ion-no-padding">
       <ion-item id="present-clear-storage-alert" [button]="true">
         <ion-icon aria-hidden="true" name="refresh-outline" slot="start"></ion-icon>
         <ion-label>Clear Storage</ion-label>

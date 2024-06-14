@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { MenuController } from '@ionic/angular';
 import { AuthService } from 'src/app/auth/auth.service';
 import { DataService } from 'src/app/services/data.service';
+import { LANGUAGES, Language } from './languages.interface';
 
 @Component({
   selector: 'app-menu',
@@ -10,6 +11,7 @@ import { DataService } from 'src/app/services/data.service';
 })
 export class MenuComponent implements OnInit {
 
+  languages: Language[] = LANGUAGES;
   public clearStorageAlertButtons = [
     {
       text: 'No, Cancel',
@@ -42,8 +44,9 @@ export class MenuComponent implements OnInit {
 
   ngOnInit() { }
 
-  changeLanguage() {
-
+  changeLanguage(selectedLanguageIndex: number) {
+    (this.languages.find(language => language.isSelected) as Language).isSelected = false;
+    this.languages[selectedLanguageIndex].isSelected = true;
   }
 
   clearStorage() {
