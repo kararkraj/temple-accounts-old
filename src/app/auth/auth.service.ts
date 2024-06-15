@@ -1,4 +1,4 @@
-import { Injectable } from '@angular/core';
+import { Injectable, WritableSignal, signal } from '@angular/core';
 import { Router } from '@angular/router';
 import { Observable, of } from 'rxjs';
 
@@ -6,6 +6,8 @@ import { Observable, of } from 'rxjs';
   providedIn: 'root'
 })
 export class AuthService {
+
+  public isAuthenticatedSignal: WritableSignal<boolean> = signal(this.isAuthenticated());
 
   constructor(
     private router: Router
@@ -31,5 +33,6 @@ export class AuthService {
 
   updateAuthenticated(isAuthenticated: boolean): void {
     localStorage.setItem('isAuthenticated', `${isAuthenticated}`);
+    this.isAuthenticatedSignal.set(isAuthenticated);
   }
 }

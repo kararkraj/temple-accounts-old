@@ -1,19 +1,18 @@
 <div class="login-container">
   <ion-text color="primary" class="ion-text-center">
-    <h1>Login</h1>
+    <h1>{{'LOGIN_PAGE.LOGIN' | translate}}</h1>
   </ion-text>
 
   <form (ngSubmit)="onLogin()">
     <div>
-      <ion-input [(ngModel)]="username" label="Username" label-placement="floating" fill="solid"
-        placeholder="Enter username" type="text" name="username" required></ion-input>
+      <ion-input [(ngModel)]="username" [label]="'LOGIN_PAGE.USERNAME' | translate" label-placement="floating" fill="solid"
+        [placeholder]="'LOGIN_PAGE.ENTER_USERNAME' | translate" type="text" name="username" required></ion-input>
     </div>
     <div>
-      <ion-input [(ngModel)]="password" label="Password" label-placement="floating" fill="solid"
-        placeholder="Enter password" type="password" name="password" required></ion-input>
+      <ion-input [(ngModel)]="password" [label]="'LOGIN_PAGE.PASSWORD' | translate" label-placement="floating" fill="solid"
+        [placeholder]="'LOGIN_PAGE.ENTER_PASSWORD' | translate" type="password" name="password" required></ion-input>
     </div>
 
-    <ion-button expand="full" type="submit">Login</ion-button>
+    <ion-button expand="full" type="submit">{{'LOGIN_PAGE.LOGIN' | translate}}</ion-button>
   </form>
-
 </div>

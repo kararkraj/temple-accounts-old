@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { ToastController } from '@ionic/angular';
 import { AuthService } from '../auth/auth.service';
+import { TranslateService } from '@ngx-translate/core';
 
 @Component({
   selector: 'app-login',
@@ -16,7 +17,8 @@ export class LoginComponent implements OnInit {
   constructor(
     private toastController: ToastController,
     private router: Router,
-    private auth: AuthService
+    private auth: AuthService,
+    public translate: TranslateService
   ) {
     this.username = "";
     this.password = "";
@@ -29,13 +31,13 @@ export class LoginComponent implements OnInit {
       next: (iaAuthenticated: boolean) => {
         if (iaAuthenticated) {
           this.toastController.create({
-            message: 'Login successful!!',
+            message: this.translate.instant('LOGIN_PAGE.LOGIN_SUCCESS'),
             duration: 5000,
             position: 'bottom'
           }).then(toast => toast.present().then(() => this.router.navigateByUrl("/auth/add-entry")));
         } else {
           this.toastController.create({
-            message: 'Invalid credentials',
+            message: this.translate.instant('LOGIN_PAGE.INVALID_LOGIN'),
             duration: 5000,
             position: 'bottom'
           }).then(toast => toast.present());

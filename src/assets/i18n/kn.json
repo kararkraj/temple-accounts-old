@@ -1,0 +1,11 @@
+{
+    "LOGIN_PAGE": {
+        "USERNAME": "ಬಳಕೆದಾರ ಹೆಸರು",
+        "ENTER_USERNAME": "ಬಳಕೆದಾರ ಹೆಸರು ನಮೂದಿಸಿ",
+        "PASSWORD": "ಪಾಸ್ ವರ್ಡ್",
+        "ENTER_PASSWORD": "ಪಾಸ್ ವರ್ಡ್ ನಮೂದಿಸಿ",
+        "LOGIN": "ಲಾಗಿನ್ ಮಾಡಿ",
+        "LOGIN_SUCCESS": "ಲಾಗಿನ್ ಯಶಸ್ವಿ!!",
+        "INVALID_LOGIN": "ಅಮಾನ್ಯ ರುಜುವಾತುಗಳು"
+    }
+}

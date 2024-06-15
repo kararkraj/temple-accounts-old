@@ -31,6 +31,8 @@
     "@capacitor/status-bar": "6.0.0",
     "@ionic/angular": "^8.0.0",
     "@ionic/storage-angular": "^4.0.0",
+    "@ngx-translate/core": "^15.0.0",
+    "@ngx-translate/http-loader": "^8.0.0",
     "@types/pdfmake": "^0.2.9",
     "ionicons": "^7.0.0",
     "pdfmake": "^0.2.10",
