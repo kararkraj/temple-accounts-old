@@ -1,16 +1,20 @@
+<app-header [title]="'LOGIN_PAGE.LOGIN' | translate"></app-header>
+
 <div class="login-container">
-  <ion-text color="primary" class="ion-text-center">
-    <h1>{{'LOGIN_PAGE.LOGIN' | translate}}</h1>
-  </ion-text>
+  <div class="logo-container">
+    <ion-img src="./../../assets/icons/icon-512.webp" alt="App logo"></ion-img>
+  </div>
 
   <form (ngSubmit)="onLogin()">
     <div>
-      <ion-input [(ngModel)]="username" [label]="'LOGIN_PAGE.USERNAME' | translate" label-placement="floating" fill="solid"
-        [placeholder]="'LOGIN_PAGE.ENTER_USERNAME' | translate" type="text" name="username" required></ion-input>
+      <ion-input [(ngModel)]="username" [label]="'LOGIN_PAGE.USERNAME' | translate" label-placement="floating"
+        fill="solid" [placeholder]="'LOGIN_PAGE.ENTER_USERNAME' | translate" type="text" name="username"
+        required></ion-input>
     </div>
     <div>
-      <ion-input [(ngModel)]="password" [label]="'LOGIN_PAGE.PASSWORD' | translate" label-placement="floating" fill="solid"
-        [placeholder]="'LOGIN_PAGE.ENTER_PASSWORD' | translate" type="password" name="password" required></ion-input>
+      <ion-input [(ngModel)]="password" [label]="'LOGIN_PAGE.PASSWORD' | translate" label-placement="floating"
+        fill="solid" [placeholder]="'LOGIN_PAGE.ENTER_PASSWORD' | translate" type="password" name="password"
+        required></ion-input>
     </div>
 
     <ion-button expand="full" type="submit" size="large">{{'LOGIN_PAGE.LOGIN' | translate}}</ion-button>

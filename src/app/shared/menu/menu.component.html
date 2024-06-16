@@ -28,6 +28,7 @@
         </div>
       </ion-accordion>
     </ion-accordion-group>
+    @if (isLoggedIn) {
     <ion-list lines="full" class="ion-no-padding">
       <ion-item id="present-clear-storage-alert" [button]="true">
         <ion-icon aria-hidden="true" name="refresh-outline" slot="start"></ion-icon>
@@ -38,11 +39,14 @@
         <ion-label>Logout</ion-label>
       </ion-item>
     </ion-list>
+    }
   </ion-content>
 </ion-menu>
 
+@if (isLoggedIn) {
 <ion-alert trigger="present-clear-storage-alert" header="Are you sure you want to clear the stored data?"
   [buttons]="clearStorageAlertButtons"></ion-alert>
 
 <ion-alert trigger="present-logout-alert" header="Are you sure you want to logout?"
   [buttons]="logoutAlertButtons"></ion-alert>
+}

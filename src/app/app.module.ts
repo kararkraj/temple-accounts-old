@@ -12,6 +12,7 @@ import { IonicStorageModule } from '@ionic/storage-angular';
 import { HttpClient, HttpClientModule } from '@angular/common/http';
 import { TranslateHttpLoader } from '@ngx-translate/http-loader';
 import { TranslateLoader, TranslateModule } from '@ngx-translate/core';
+import { SharedModule } from './shared/shared.module';
 
 // Factory function required during AOT compilation
 export function httpTranslateLoaderFactory(http: HttpClient) {
@@ -33,7 +34,8 @@ export function httpTranslateLoaderFactory(http: HttpClient) {
         useFactory: httpTranslateLoaderFactory,
         deps: [HttpClient]
       }
-    })
+    }),
+    SharedModule
   ],
   providers: [{ provide: RouteReuseStrategy, useClass: IonicRouteStrategy }],
   bootstrap: [AppComponent],

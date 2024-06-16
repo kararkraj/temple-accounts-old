@@ -38,7 +38,7 @@ export class MenuComponent implements OnInit {
   public isLoggedIn: boolean = false;
   public isAuthenticatedEffet: EffectRef = effect(() => {
     this.isLoggedIn = this.authService.isAuthenticatedSignal();
-    console.log(this.isLoggedIn);
+    this.isAuthenticatedEffet.destroy();
   });
 
   constructor(

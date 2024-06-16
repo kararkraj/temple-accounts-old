@@ -24,7 +24,8 @@ export class AuthService {
 
   logout() {
     this.updateAuthenticated(false);
-    this.router.navigateByUrl('login');
+    // // navigate with replaceUrl: true is used in order to set new root and destroy the previous components
+    this.router.navigate(['login'], { replaceUrl: true });
   }
 
   isAuthenticated(): boolean {

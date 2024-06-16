@@ -37,7 +37,10 @@ export class LoginComponent implements OnInit {
               message: this.translate.instant('LOGIN_PAGE.LOGIN_SUCCESS'),
               duration: 5000,
               position: 'bottom'
-            }).then(toast => toast.present().then(() => this.router.navigateByUrl("/auth/add-entry")));
+            }).then(toast => toast.present().then(() => 
+              // navigate with replaceUrl: true is used in order to set new root and destroy the login component
+              this.router.navigate(['auth'], { replaceUrl: true })
+            ));
           } else {
             this.toastController.create({
               message: this.translate.instant('LOGIN_PAGE.INVALID_LOGIN'),
