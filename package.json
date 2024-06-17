@@ -10,7 +10,7 @@
     "watch": "ng build --watch --configuration development",
     "test": "ng test",
     "lint": "ng lint",
-    "deploy": "ionic build --base-href=/angular-ci-cd/"
+    "deploy": "ng build --base-href=/angular-ci-cd/"
   },
   "private": true,
   "dependencies": {
