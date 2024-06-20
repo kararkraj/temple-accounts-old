@@ -1,9 +1,15 @@
 <ion-content [fullscreen]="true">
   <div class="container">
     <form (ngSubmit)="onSubmit(entryForm)" #entryForm="ngForm">
+      <ion-select [(ngModel)]="title" label="Title" label-placement="floating" fill="solid" placeholder="Select title"
+        required name="title">
+        <ion-select-option value="Sri.">Sri. (Shriman)</ion-select-option>
+        <ion-select-option value="Smt.">Smt. (Shrimati)</ion-select-option>
+        <ion-select-option value="Kum.">Kum. (Kumar/Kumari)</ion-select-option>
+      </ion-select>
       <ion-input [(ngModel)]="name" label="Name" label-placement="floating" fill="solid" placeholder="Enter name"
         type="text" name="name" required></ion-input>
-      <ion-select [(ngModel)]="seva" label="Seva" label-placement="floating" fill="solid" placeholder="Select sevas"
+      <ion-select [(ngModel)]="sevaId" label="Seva" label-placement="floating" fill="solid" placeholder="Select sevas"
         required name="seva">
         @for (seva of sevas; track $index) {
         <ion-select-option [value]="seva.id">{{seva.name}}</ion-select-option>
